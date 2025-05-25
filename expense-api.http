@@ -1,6 +1,42 @@
-### Create Expense
+### Register User
+POST http://localhost:4000/auth/register
+Content-Type: application/json
+
+{
+  "username": "testuser",
+  "email": "testuser@example.com",
+  "password": "TestPass123"
+}
+
+### Login User
+POST http://localhost:4000/auth/login
+Content-Type: application/json
+
+{
+  "username": "testuser",
+  "password": "TestPass123"
+}
+
+### Refresh Token
+POST http://localhost:4000/auth/refresh
+Content-Type: application/json
+
+{
+  "refreshToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjMsImlhdCI6MTc0ODE5NDEwMywiZXhwIjoxNzQ4Nzk4OTAzfQ.J4L62Z0lpe5rKtvwABhSrjmEGHS4Zr9slhgLtnC-RJw"
+}
+
+### Logout
+POST http://localhost:4000/auth/logout
+Content-Type: application/json
+
+{
+  "refreshToken": "<paste_refresh_token_here>"
+}
+
+### Create Expense (requires Bearer token)
 POST http://localhost:4000/expenses
 Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjMsInVzZXJuYW1lIjoidGVzdHVzZXIiLCJpYXQiOjE3NDgxOTQzMDQsImV4cCI6MTc0ODE5NTIwNH0.5_H7phfRpZdqGL19SYiijgzHflBSGm1UQaBhjFv_u8k
 
 {
   "title": "Test Expense",
@@ -10,23 +46,27 @@ Content-Type: application/json
   "description": "Lunch"
 }
 
-### Get All Expenses
+### Get All Expenses (requires Bearer token)
 GET http://localhost:4000/expenses
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjMsInVzZXJuYW1lIjoidGVzdHVzZXIiLCJpYXQiOjE3NDgxOTQzMDQsImV4cCI6MTc0ODE5NTIwNH0.5_H7phfRpZdqGL19SYiijgzHflBSGm1UQaBhjFv_u8k
 
-### Get Expense by ID
-GET http://localhost:4000/expenses/2
+### Get Expense by ID (requires Bearer token)
+GET http://localhost:4000/expenses/8
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjMsInVzZXJuYW1lIjoidGVzdHVzZXIiLCJpYXQiOjE3NDgxOTQzMDQsImV4cCI6MTc0ODE5NTIwNH0.5_H7phfRpZdqGL19SYiijgzHflBSGm1UQaBhjFv_u8k
 
-### Update Expense
-PUT http://localhost:4000/expenses/2
+### Update Expense (requires Bearer token)
+PUT http://localhost:4000/expenses/1
 Content-Type: application/json
+Authorization: Bearer <paste_access_token_here>
 
 {
   "title": "Updated Expense",
   "amount": 60
 }
 
-### Delete Expense
-DELETE http://localhost:4000/expenses/2
+### Delete Expense (requires Bearer token)
+DELETE http://localhost:4000/expenses/8
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjMsInVzZXJuYW1lIjoidGVzdHVzZXIiLCJpYXQiOjE3NDgxOTQzMDQsImV4cCI6MTc0ODE5NTIwNH0.5_H7phfRpZdqGL19SYiijgzHflBSGm1UQaBhjFv_u8k
 
 ### Health Check
 GET http://localhost:4000/health 

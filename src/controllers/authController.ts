@@ -4,8 +4,6 @@ import jwt from 'jsonwebtoken';
 import { AppDataSource } from '../data-source';
 import { User } from '../models/User';
 
-const userRepository = AppDataSource.getRepository(User);
-
 const ACCESS_TOKEN_SECRET = process.env.ACCESS_TOKEN_SECRET || 'access_secret';
 const REFRESH_TOKEN_SECRET = process.env.REFRESH_TOKEN_SECRET || 'refresh_secret';
 const ACCESS_TOKEN_EXPIRES_IN = '15m';
@@ -19,7 +17,12 @@ function generateRefreshToken(user: User) {
   return jwt.sign({ userId: user.id }, REFRESH_TOKEN_SECRET, { expiresIn: REFRESH_TOKEN_EXPIRES_IN });
 }
 
+export function getUserRepository() {
+  return AppDataSource.getRepository(User);
+}
+
 export const register: RequestHandler = async (req, res) => {
+  const userRepository = getUserRepository();
   try {
     const { username, email, password } = req.body;
     if (!username || !email || !password) {
@@ -43,6 +46,7 @@ export const register: RequestHandler = async (req, res) => {
 };
 
 export const login: RequestHandler = async (req, res) => {
+  const userRepository = getUserRepository();
   try {
     const { username, password } = req.body;
     if (!username || !password) {
@@ -72,6 +76,7 @@ export const login: RequestHandler = async (req, res) => {
 };
 
 export const refresh: RequestHandler = async (req, res) => {
+  const userRepository = getUserRepository();
   try {
     const { refreshToken } = req.body;
     if (!refreshToken) {
@@ -103,6 +108,7 @@ export const refresh: RequestHandler = async (req, res) => {
 };
 
 export const logout: RequestHandler = async (req, res) => {
+  const userRepository = getUserRepository();
   try {
     const { refreshToken } = req.body;
     if (!refreshToken) {

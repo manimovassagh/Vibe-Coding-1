@@ -2,6 +2,7 @@ import dotenv from 'dotenv';
 import express, { Application, NextFunction, Request, Response } from 'express';
 import 'reflect-metadata';
 import { AppDataSource } from './data-source';
+import expenseRoutes from './routes/expenseRoutes';
 
 // Load environment variables
 dotenv.config();
@@ -26,6 +27,8 @@ app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
   console.error(err.stack);
   res.status(500).json({ message: err.message });
 });
+
+app.use('/expenses', expenseRoutes);
 
 AppDataSource.initialize()
   .then(() => {

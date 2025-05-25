@@ -2,9 +2,12 @@ import { RequestHandler } from 'express';
 import { AppDataSource } from '../data-source';
 import { Expense } from '../models/Expense';
 
-const expenseRepository = AppDataSource.getRepository(Expense);
+export function getExpenseRepository() {
+  return AppDataSource.getRepository(Expense);
+}
 
 export const createExpense: RequestHandler = async (req, res) => {
+  const expenseRepository = getExpenseRepository();
   try {
     const expense = expenseRepository.create(req.body);
     const result = await expenseRepository.save(expense);
@@ -17,6 +20,7 @@ export const createExpense: RequestHandler = async (req, res) => {
 };
 
 export const getExpenses: RequestHandler = async (req, res) => {
+  const expenseRepository = getExpenseRepository();
   try {
     const expenses = await expenseRepository.find();
     res.json(expenses);
@@ -28,6 +32,7 @@ export const getExpenses: RequestHandler = async (req, res) => {
 };
 
 export const getExpenseById: RequestHandler = async (req, res) => {
+  const expenseRepository = getExpenseRepository();
   try {
     const expense = await expenseRepository.findOneBy({ id: Number(req.params.id) });
     if (!expense) {
@@ -43,6 +48,7 @@ export const getExpenseById: RequestHandler = async (req, res) => {
 };
 
 export const updateExpense: RequestHandler = async (req, res) => {
+  const expenseRepository = getExpenseRepository();
   try {
     const expense = await expenseRepository.findOneBy({ id: Number(req.params.id) });
     if (!expense) {
@@ -60,6 +66,7 @@ export const updateExpense: RequestHandler = async (req, res) => {
 };
 
 export const deleteExpense: RequestHandler = async (req, res) => {
+  const expenseRepository = getExpenseRepository();
   try {
     const id = Number(req.params.id);
     console.log(`Attempting to delete expense with id: ${id}`);

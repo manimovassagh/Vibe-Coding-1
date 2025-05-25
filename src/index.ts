@@ -16,6 +16,11 @@ app.get('/', (req: Request, res: Response) => {
   res.send('Expense Tracker API is running');
 });
 
+// Health check route
+app.get('/health', (req: Request, res: Response) => {
+  res.json({ status: 'ok' });
+});
+
 // Error handling middleware
 app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
   console.error(err.stack);

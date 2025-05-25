@@ -61,14 +61,19 @@ export const updateExpense: RequestHandler = async (req, res) => {
 
 export const deleteExpense: RequestHandler = async (req, res) => {
   try {
-    const result = await expenseRepository.delete({ id: Number(req.params.id) });
+    const id = Number(req.params.id);
+    console.log(`Attempting to delete expense with id: ${id}`);
+    const result = await expenseRepository.delete({ id });
+    console.log('Delete result:', result);
     if (result.affected === 0) {
+      console.error(`Expense with id ${id} not found.`);
       res.status(404).json({ message: 'Expense not found' });
       return;
     }
     res.status(204).send();
     return;
   } catch (error) {
+    console.error('Error deleting expense:', error);
     res.status(500).json({ message: (error as Error).message });
     return;
   }

@@ -1,0 +1,32 @@
+### Create Expense
+POST http://localhost:4000/expenses
+Content-Type: application/json
+
+{
+  "title": "Test Expense",
+  "amount": 50.5,
+  "category": "Food",
+  "date": "2024-06-01",
+  "description": "Lunch"
+}
+
+### Get All Expenses
+GET http://localhost:4000/expenses
+
+### Get Expense by ID
+GET http://localhost:4000/expenses/2
+
+### Update Expense
+PUT http://localhost:4000/expenses/2
+Content-Type: application/json
+
+{
+  "title": "Updated Expense",
+  "amount": 60
+}
+
+### Delete Expense
+DELETE http://localhost:4000/expenses/2
+
+### Health Check
+GET http://localhost:4000/health 

@@ -7,6 +7,7 @@ import expenseRoutes from './routes/expenseRoutes';
 // Load environment variables
 dotenv.config();
 
+
 const app: Application = express();
 const PORT = process.env.PORT || 4000;
 
